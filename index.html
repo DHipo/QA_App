@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reporte de Residentes en Clientes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6;
+      }
+      .container {
+        max-width: 800px;
+      }
+      .animate-spin {
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .image-preview-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 1rem;
+      }
+      .image-preview-grid img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body class="p-4 sm:p-8 flex items-center justify-center min-h-screen">
+    <div class="container bg-white p-6 sm:p-10 rounded-xl shadow-lg w-full">
+      <div class="flex flex-col md:flex-row items-center justify-center mb-6">
+        <img
+          src="https://www.opmobility.com/wp-content/uploads/2024/03/logo-opmobility-blue-500.png"
+          alt="opmobility Logo"
+          class="w-50 mx-auto mb-6"
+        />
+        <div class="flex flex-col ml-4">
+          <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">
+            Reporte de Residentes en Clientes
+          </h1>
+          <p class="text-center text-gray-600 mb-8">
+            Completa el formulario para registrar un problema de calidad.
+          </p>
+        </div>
+      </div>
+      <form id="reportForm" class="space-y-6">
+        <div>
+          <label
+            for="terminalAutomotriz"
+            class="block text-sm font-medium text-gray-700"
+            >Terminal Automotriz (Cliente)</label
+          >
+          <select
+            id="terminalAutomotriz"
+            required
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          ></select>
+        </div>
+
+        <div>
+          <label for="residente" class="block text-sm font-medium text-gray-700"
+            >Residente</label
+          >
+          <select
+            id="residente"
+            required
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          ></select>
+        </div>
+
+        <div id="residenteEmailDiv" class="hidden">
+          <label
+            for="residenteEmailInput"
+            class="block text-sm font-medium text-gray-700"
+            >Email del Residente</label
+          >
+          <input
+            type="email"
+            id="residenteEmailInput"
+            placeholder="residente@ejemplo.com"
+            class="mt-1 block w-full px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          />
+        </div>
+
+        <div>
+          <label for="turno" class="block text-sm font-medium text-gray-700"
+            >Turno</label
+          >
+          <select
+            id="turno"
+            required
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          ></select>
+        </div>
+
+        <div>
+          <label for="producto" class="block text-sm font-medium text-gray-700"
+            >Producto</label
+          >
+          <select
+            id="producto"
+            required
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          ></select>
+        </div>
+        <div id="productoOtroDiv" class="hidden">
+          <label
+            for="productoOtroInput"
+            class="block text-sm font-medium text-gray-700"
+            >Especificar Producto</label
+          >
+          <input
+            type="text"
+            id="productoOtroInput"
+            placeholder="Ej: Espejo retrovisor"
+            class="mt-1 block w-full px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          />
+        </div>
+
+        <div>
+          <label for="pieza" class="block text-sm font-medium text-gray-700"
+            >Pieza en Específico</label
+          >
+          <input
+            type="text"
+            id="pieza"
+            required
+            placeholder="Ej: Espejo lateral derecho"
+            class="mt-1 block w-full px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          />
+        </div>
+
+        <div>
+          <label
+            for="cantidadNoConforme"
+            class="block text-sm font-medium text-gray-700"
+            >Cantidad No Conforme</label
+          >
+          <input
+            type="number"
+            id="cantidadNoConforme"
+            required
+            min="1"
+            class="mt-1 block w-full px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          />
+        </div>
+
+        <div>
+          <label
+            for="motivoNoConforme"
+            class="block text-sm font-medium text-gray-700"
+            >Motivo No Conforme</label
+          >
+          <select
+            id="motivoNoConforme"
+            required
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          ></select>
+        </div>
+        <div id="motivoNoConformeOtroDiv" class="hidden">
+          <label
+            for="motivoNoConformeOtroInput"
+            class="block text-sm font-medium text-gray-700"
+            >Especificar Motivo</label
+          >
+          <input
+            type="text"
+            id="motivoNoConformeOtroInput"
+            placeholder="Ej: Ruptura por mala manipulación"
+            class="mt-1 block w-full px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          />
+        </div>
+
+        <div>
+          <label for="zona" class="block text-sm font-medium text-gray-700"
+            >Zona (Ubicación del problema)</label
+          >
+          <select
+            id="zona"
+            required
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          ></select>
+        </div>
+        <div id="zonaOtroDiv" class="hidden">
+          <label
+            for="zonaOtroInput"
+            class="block text-sm font-medium text-gray-700"
+            >Especificar Zona</label
+          >
+          <input
+            type="text"
+            id="zonaOtroInput"
+            placeholder="Ej: Interior del baúl"
+            class="mt-1 block w-full px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label
+              for="rotacionSecuencia"
+              class="block text-sm font-medium text-gray-700"
+              >Rotación / Secuencia</label
+            >
+            <input
+              type="text"
+              id="rotacionSecuencia"
+              placeholder="Ej: 12345"
+              class="mt-1 block w-full px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+            />
+          </div>
+          <div>
+            <label for="vinHu" class="block text-sm font-medium text-gray-700"
+              >VIN / HU</label
+            >
+            <input
+              type="text"
+              id="vinHu"
+              placeholder="Ej: ABC123DEF456"
+              class="mt-1 block w-full px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label
+            for="defectoProceso"
+            class="block text-sm font-medium text-gray-700"
+            >Defecto de Proceso</label
+          >
+          <select
+            id="defectoProceso"
+            required
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          ></select>
+        </div>
+        <div id="defectoProcesoOtroDiv" class="hidden">
+          <label
+            for="defectoProcesoOtroInput"
+            class="block text-sm font-medium text-gray-700"
+            >Especificar Defecto de Proceso</label
+          >
+          <input
+            type="text"
+            id="defectoProcesoOtroInput"
+            placeholder="Ej: Ensamblado incorrecto de pieza"
+            class="mt-1 block w-full px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Trazabilidad de Etiqueta (Subir una o más fotos)</label
+          >
+          <div
+            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+          >
+            <div class="space-y-1 text-center">
+              <svg
+                class="mx-auto h-12 w-12 text-gray-400"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 48 48"
+                aria-hidden="true"
+              >
+                <path
+                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-8m32-4l-3.293-3.293a1 1 0 00-1.414 0L28 28m0 0l4 4m-4-4l-1.414-1.414a1 1 0 00-1.414 0L14 36m24 0H8"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div
+                class="flex flex-col sm:flex-row justify-center items-center text-sm text-gray-600 space-y-2 sm:space-y-0 sm:space-x-4 mt-2"
+              >
+                <label
+                  for="etiquetaInput"
+                  class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                >
+                  <span>Subir archivos</span>
+                  <input
+                    id="etiquetaInput"
+                    name="etiqueta"
+                    type="file"
+                    class="sr-only"
+                    accept="image/*"
+                    multiple
+                  />
+                </label>
+                <span class="text-gray-400 font-bold hidden sm:block">O</span>
+                <label
+                  for="etiquetaInputCamera"
+                  class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                >
+                  <span>Tomar foto</span>
+                  <input
+                    id="etiquetaInputCamera"
+                    name="etiqueta"
+                    type="file"
+                    class="sr-only"
+                    accept="image/*"
+                    capture="environment"
+                    multiple
+                  />
+                </label>
+              </div>
+              <p class="text-xs text-gray-500">PNG, JPG, GIF</p>
+            </div>
+          </div>
+          <div id="etiquetaPreview" class="mt-4 hidden">
+            <p class="text-sm font-medium text-gray-700 mb-2">
+              Previsualización de las etiquetas:
+            </p>
+            <div id="previewEtiquetaContainer" class="image-preview-grid"></div>
+          </div>
+        </div>
+
+        <div>
+          <label for="accion" class="block text-sm font-medium text-gray-700"
+            >Acción (Retrabajo)</label
+          >
+          <select
+            id="accion"
+            required
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          >
+            <option value="No">No</option>
+            <option value="Si">Sí</option>
+          </select>
+        </div>
+        <div id="accionDetalleDiv" class="hidden">
+          <label
+            for="accionDetalle"
+            class="block text-sm font-medium text-gray-700"
+            >Detalle del Retrabajo</label
+          >
+          <textarea
+            id="accionDetalle"
+            rows="2"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          ></textarea>
+        </div>
+
+        <hr class="my-6" />
+
+        <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">
+          Contención del Problema - Punto de Corte
+        </h2>
+
+        <div>
+          <label
+            for="puntoDeCorte"
+            class="block text-sm font-medium text-gray-700"
+            >Marcar Punto de Corte (Número de Secuencia)</label
+          >
+          <input
+            type="text"
+            id="puntoDeCorte"
+            placeholder="Ej: 54321"
+            class="mt-1 block w-full px-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Identificación del Punto de Corte (Subir una o más fotos)</label
+          >
+          <div
+            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
+          >
+            <div class="space-y-1 text-center">
+              <svg
+                class="mx-auto h-12 w-12 text-gray-400"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 48 48"
+                aria-hidden="true"
+              >
+                <path
+                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-8m32-4l-3.293-3.293a1 1 0 00-1.414 0L28 28m0 0l4 4m-4-4l-1.414-1.414a1 1 0 00-1.414 0L14 36m24 0H8"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div
+                class="flex flex-col sm:flex-row justify-center items-center text-sm text-gray-600 space-y-2 sm:space-y-0 sm:space-x-4 mt-2"
+              >
+                <label
+                  for="puntoDeCorteInput"
+                  class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                >
+                  <span>Subir archivos</span>
+                  <input
+                    id="puntoDeCorteInput"
+                    name="puntoDeCorteImage"
+                    type="file"
+                    class="sr-only"
+                    accept="image/*"
+                    multiple
+                  />
+                </label>
+                <span class="text-gray-400 font-bold hidden sm:block">O</span>
+                <label
+                  for="puntoDeCorteInputCamera"
+                  class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                >
+                  <span>Tomar foto</span>
+                  <input
+                    id="puntoDeCorteInputCamera"
+                    name="puntoDeCorteImage"
+                    type="file"
+                    class="sr-only"
+                    accept="image/*"
+                    capture="environment"
+                    multiple
+                  />
+                </label>
+              </div>
+              <p class="text-xs text-gray-500">PNG, JPG, GIF</p>
+            </div>
+          </div>
+          <div id="puntoDeCortePreview" class="mt-4 hidden">
+            <p class="text-sm font-medium text-gray-700 mb-2">
+              Previsualización de las fotos:
+            </p>
+            <div
+              id="previewPuntoDeCorteContainer"
+              class="image-preview-grid"
+            ></div>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          id="submitButton"
+          class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Registrar Problema
+        </button>
+        <div
+          id="loadingIndicator"
+          class="mt-4 hidden text-center text-gray-500"
+        >
+          <p class="flex items-center justify-center">
+            <svg
+              class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            Guardando reporte...
+          </p>
+        </div>
+      </form>
+
+      <div class="mt-10">
+        <h2 class="text-2xl font-bold text-center mb-4 text-gray-800">
+          Reportes Guardados
+        </h2>
+        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+          <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="py-3 px-6">Fecha</th>
+                <th scope="col" class="py-3 px-6">Terminal</th>
+                <th scope="col" class="py-3 px-6">Residente</th>
+                <th scope="col" class="py-3 px-6">Turno</th>
+                <th scope="col" class="py-3 px-6">Producto</th>
+                <th scope="col" class="py-3 px-6">Pieza</th>
+                <th scope="col" class="py-3 px-6">Cantidad</th>
+                <th scope="col" class="py-3 px-6">Motivo</th>
+                <th scope="col" class="py-3 px-6">Zona</th>
+                <th scope="col" class="py-3 px-6">Secuencia</th>
+                <th scope="col" class="py-3 px-6">VIN/HU</th>
+                <th scope="col" class="py-3 px-6">Defecto</th>
+                <th scope="col" class="py-3 px-6">Trazabilidad</th>
+                <th scope="col" class="py-3 px-6">Acción</th>
+                <th scope="col" class="py-3 px-6">Punto de Corte</th>
+                <th scope="col" class="py-3 px-6">Foto PdC</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody"></tbody>
+          </table>
+        </div>
+        <div
+          id="noReportsMessage"
+          class="mt-4 text-center text-gray-500 hidden"
+        >
+          Aún no hay reportes guardados.
+        </div>
+
+        <div
+          class="mt-6 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4"
+        >
+          <div class="w-full flex flex-col items-center space-y-2">
+            <button
+              id="exportButton"
+              class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Exportar a Excel (CSV)
+            </button>
+            <button
+              id="shareButton"
+              class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Compartir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="messageModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+      <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-gray-900 opacity-50 absolute inset-0"></div>
+        <div
+          class="bg-white rounded-lg p-6 max-w-sm mx-auto shadow-xl transform transition-all relative z-10"
+        >
+          <h3
+            id="modalTitle"
+            class="text-lg leading-6 font-medium text-gray-900 mb-2"
+          ></h3>
+          <div class="mt-2">
+            <p id="modalMessage" class="text-sm text-gray-500"></p>
+          </div>
+          <div class="mt-4 flex justify-end">
+            <button
+              id="modalCloseButton"
+              type="button"
+              class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let reports = [];
+
+      // --- Persistent Data Management ---
+      function saveReports() {
+        localStorage.setItem("qualityReports", JSON.stringify(reports));
+      }
+
+      function loadReports() {
+        const storedReports = localStorage.getItem("qualityReports");
+        if (storedReports) {
+          reports = JSON.parse(storedReports);
+        }
+      }
+
+      // Render reports to the table
+      function renderReports() {
+        const reportTableBody = document.getElementById("reportTableBody");
+        const noReportsMessage = document.getElementById("noReportsMessage");
+
+        reportTableBody.innerHTML = "";
+        if (reports.length === 0) {
+          noReportsMessage.classList.remove("hidden");
+        } else {
+          noReportsMessage.classList.add("hidden");
+          reports.forEach((report) => {
+            const row = document.createElement("tr");
+            row.classList.add("bg-white", "border-b", "hover:bg-gray-50");
+            row.innerHTML = `
+                        <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">${
+                          report.fecha || "N/A"
+                        }</td>
+                        <td class="py-4 px-6">${
+                          report.terminalAutomotriz || "N/A"
+                        }</td>
+                        <td class="py-4 px-6">${report.residente || "N/A"}</td>
+                        <td class="py-4 px-6">${report.turno || "N/A"}</td>
+                        <td class="py-4 px-6">${report.producto || "N/A"}</td>
+                        <td class="py-4 px-6">${report.pieza || "N/A"}</td>
+                        <td class="py-4 px-6">${
+                          report.cantidadNoConforme || "N/A"
+                        }</td>
+                        <td class="py-4 px-6">${
+                          report.motivoNoConforme || "N/A"
+                        }</td>
+                        <td class="py-4 px-6">${report.zona || "N/A"}</td>
+                        <td class="py-4 px-6">${
+                          report.rotacionSecuencia || "N/A"
+                        }</td>
+                        <td class="py-4 px-6">${report.vinHu || "N/A"}</td>
+                        <td class="py-4 px-6">${
+                          report.defectoProceso || "N/A"
+                        }</td>
+                        <td class="py-4 px-6">
+                            ${
+                              report.etiquetaUrls &&
+                              report.etiquetaUrls.length > 0
+                                ? report.etiquetaUrls
+                                    .map(
+                                      (url) =>
+                                        `<a href="${url}" target="_blank" class="text-indigo-600 hover:text-indigo-900">Ver</a>`
+                                    )
+                                    .join(", ")
+                                : "N/A"
+                            }
+                        </td>
+                        <td class="py-4 px-6">${report.accion || "N/A"}${
+              report.accionDetalle ? ` (${report.accionDetalle})` : ""
+            }</td>
+                        <td class="py-4 px-6">${
+                          report.puntoDeCorte || "N/A"
+                        }</td>
+                        <td class="py-4 px-6">
+                            ${
+                              report.puntoDeCorteUrls &&
+                              report.puntoDeCorteUrls.length > 0
+                                ? report.puntoDeCorteUrls
+                                    .map(
+                                      (url) =>
+                                        `<a href="${url}" target="_blank" class="text-indigo-600 hover:text-indigo-900">Ver</a>`
+                                    )
+                                    .join(", ")
+                                : "N/A"
+                            }
+                        </td>
+                    `;
+            reportTableBody.appendChild(row);
+          });
+        }
+      }
+
+      // --- Application Logic ---
+      document.addEventListener("DOMContentLoaded", () => {
+        loadReports();
+        renderReports();
+
+        const data = {
+          terminalesAutomotrices: [
+            "Volkswagen",
+            "Stellantis",
+            "GM",
+            "Stellantis RAM",
+          ],
+          residentes: [
+            "Residente A",
+            "Residente B",
+            "Residente C",
+            "Ingresar mail",
+          ],
+          productos: ["Producto A", "Producto B", "Producto C", "Otro"],
+          turnos: ["Turno mañana", "Turno tarde", "Turno noche"],
+          motivosNoConformes: [
+            "Rayon",
+            "Golpe",
+            "Mancha",
+            "Desperfecto de pintura",
+            "Falla eléctrica",
+            "Ruido inusual",
+            "Etiqueta dañada",
+            "Empaque abierto",
+            "Componente faltante",
+            "Otro",
+          ],
+          zonas: [
+            "Parte delantera",
+            "Parte trasera",
+            "Parte izquierda",
+            "Parte derecha",
+            "Otro",
+          ],
+          defectosProceso: [
+            "Pintura",
+            "Montaje",
+            "Soldadura",
+            "Ajuste",
+            "Otro",
+          ],
+        };
+
+        const reportForm = document.getElementById("reportForm");
+        const residenteSelect = document.getElementById("residente");
+        const residenteEmailDiv = document.getElementById("residenteEmailDiv");
+        const residenteEmailInput = document.getElementById(
+          "residenteEmailInput"
+        );
+        const accionSelect = document.getElementById("accion");
+        const accionDetalleDiv = document.getElementById("accionDetalleDiv");
+        const etiquetaInput = document.getElementById("etiquetaInput");
+        const etiquetaInputCamera = document.getElementById(
+          "etiquetaInputCamera"
+        );
+        const etiquetaPreview = document.getElementById("etiquetaPreview");
+        const previewEtiquetaContainer = document.getElementById(
+          "previewEtiquetaContainer"
+        );
+        const puntoDeCorteInput = document.getElementById("puntoDeCorteInput");
+        const puntoDeCorteInputCamera = document.getElementById(
+          "puntoDeCorteInputCamera"
+        );
+        const puntoDeCortePreview = document.getElementById(
+          "puntoDeCortePreview"
+        );
+        const previewPuntoDeCorteContainer = document.getElementById(
+          "previewPuntoDeCorteContainer"
+        );
+        const submitButton = document.getElementById("submitButton");
+        const loadingIndicator = document.getElementById("loadingIndicator");
+        const exportButton = document.getElementById("exportButton");
+        const shareButton = document.getElementById("shareButton");
+
+        const messageModal = document.getElementById("messageModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalMessage = document.getElementById("modalMessage");
+        const modalCloseButton = document.getElementById("modalCloseButton");
+
+        const dropdownsConOtro = [
+          {
+            selectId: "producto",
+            inputId: "productoOtroInput",
+            divId: "productoOtroDiv",
+          },
+          {
+            selectId: "motivoNoConforme",
+            inputId: "motivoNoConformeOtroInput",
+            divId: "motivoNoConformeOtroDiv",
+          },
+          { selectId: "zona", inputId: "zonaOtroInput", divId: "zonaOtroDiv" },
+          {
+            selectId: "defectoProceso",
+            inputId: "defectoProcesoOtroInput",
+            divId: "defectoProcesoOtroDiv",
+          },
+        ];
+
+        function showMessage(title, message) {
+          modalTitle.textContent = title;
+          modalMessage.textContent = message;
+          messageModal.classList.remove("hidden");
+        }
+
+        modalCloseButton.addEventListener("click", () => {
+          messageModal.classList.add("hidden");
+        });
+
+        function populateSelect(selectElement, options) {
+          selectElement.innerHTML = "";
+          options.forEach((option) => {
+            const optionElement = document.createElement("option");
+            optionElement.value = option;
+            optionElement.textContent = option;
+            selectElement.appendChild(optionElement);
+          });
+        }
+
+        populateSelect(
+          document.getElementById("terminalAutomotriz"),
+          data.terminalesAutomotrices
+        );
+        populateSelect(residenteSelect, data.residentes);
+        populateSelect(document.getElementById("producto"), data.productos);
+        populateSelect(document.getElementById("turno"), data.turnos);
+        populateSelect(
+          document.getElementById("motivoNoConforme"),
+          data.motivosNoConformes
+        );
+        populateSelect(document.getElementById("zona"), data.zonas);
+        populateSelect(
+          document.getElementById("defectoProceso"),
+          data.defectosProceso
+        );
+
+        residenteSelect.addEventListener("change", (event) => {
+          if (event.target.value === "Ingresar mail") {
+            residenteEmailDiv.classList.remove("hidden");
+            residenteEmailInput.required = true;
+          } else {
+            residenteEmailDiv.classList.add("hidden");
+            residenteEmailInput.required = false;
+            residenteEmailInput.value = "";
+          }
+        });
+
+        accionSelect.addEventListener("change", (event) => {
+          if (event.target.value === "Si") {
+            accionDetalleDiv.classList.remove("hidden");
+          } else {
+            accionDetalleDiv.classList.add("hidden");
+          }
+        });
+
+        // Lógica para mostrar/ocultar campos 'Otro'
+        dropdownsConOtro.forEach(({ selectId, inputId, divId }) => {
+          const selectElement = document.getElementById(selectId);
+          const inputDiv = document.getElementById(divId);
+          const inputElement = document.getElementById(inputId);
+
+          selectElement.addEventListener("change", (event) => {
+            if (event.target.value === "Otro") {
+              inputDiv.classList.remove("hidden");
+              inputElement.required = true;
+            } else {
+              inputDiv.classList.add("hidden");
+              inputElement.required = false;
+              inputElement.value = "";
+            }
+          });
+        });
+
+        function handleImageSelection(
+          fileInput,
+          previewContainer,
+          previewParentDiv
+        ) {
+          previewContainer.innerHTML = "";
+          if (fileInput.files.length > 0) {
+            Array.from(fileInput.files).forEach((file) => {
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.classList.add("rounded-lg", "shadow-md");
+                previewContainer.appendChild(img);
+              };
+              reader.readAsDataURL(file);
+            });
+            previewParentDiv.classList.remove("hidden");
+          } else {
+            previewParentDiv.classList.add("hidden");
+          }
+        }
+
+        etiquetaInput.addEventListener("change", () =>
+          handleImageSelection(
+            etiquetaInput,
+            previewEtiquetaContainer,
+            etiquetaPreview
+          )
+        );
+        etiquetaInputCamera.addEventListener("change", () =>
+          handleImageSelection(
+            etiquetaInputCamera,
+            previewEtiquetaContainer,
+            etiquetaPreview
+          )
+        );
+        puntoDeCorteInput.addEventListener("change", () =>
+          handleImageSelection(
+            puntoDeCorteInput,
+            previewPuntoDeCorteContainer,
+            puntoDeCortePreview
+          )
+        );
+        puntoDeCorteInputCamera.addEventListener("change", () =>
+          handleImageSelection(
+            puntoDeCorteInputCamera,
+            previewPuntoDeCorteContainer,
+            puntoDeCortePreview
+          )
+        );
+        
+        async function uploadImageToCloudinary(file) {
+          const cloudName = "dk6fevv3i";
+          const uploadPreset = "gaston_app";
+
+          if (
+            cloudName === "YOUR_CLOUD_NAME" ||
+            uploadPreset === "YOUR_UPLOAD_PRESET"
+          ) {
+            throw new Error(
+              "Por favor, reemplaza YOUR_CLOUD_NAME y YOUR_UPLOAD_PRESET con tus valores de Cloudinary."
+            );
+          }
+
+          const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("upload_preset", uploadPreset);
+
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              body: formData,
+            });
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(
+                errorData.error.message ||
+                  "Fallo al subir la imagen a Cloudinary."
+              );
+            }
+            const data = await response.json();
+            return data.secure_url;
+          } catch (error) {
+            console.error("Error al subir la imagen:", error);
+            throw error;
+          }
+        }
+
+        async function uploadImages(files, progressMessage) {
+          const urls = [];
+          for (let i = 0; i < files.length; i++) {
+            showMessage(
+              "Subiendo imágenes",
+              `${progressMessage} (${i + 1}/${files.length})...`
+            );
+            const url = await uploadImageToCloudinary(files[i]);
+            urls.push(url);
+          }
+          return urls;
+        }
+
+        reportForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          submitButton.disabled = true;
+          loadingIndicator.classList.remove("hidden");
+
+          const selectedResidente = residenteSelect.value;
+          const residenteValue =
+            selectedResidente === "Ingresar mail"
+              ? document.getElementById("residenteEmailInput").value
+              : selectedResidente;
+
+          if (selectedResidente === "Ingresar mail" && !residenteValue) {
+            showMessage(
+              "Error de validación",
+              "Por favor, ingrese el email del residente."
+            );
+            submitButton.disabled = false;
+            loadingIndicator.classList.add("hidden");
+            return;
+          }
+
+          let etiquetaUrls = [];
+          const etiquetaFiles =
+            etiquetaInput.files.length > 0
+              ? etiquetaInput.files
+              : etiquetaInputCamera.files;
+          if (etiquetaFiles.length > 0) {
+            try {
+              etiquetaUrls = await uploadImages(
+                Array.from(etiquetaFiles),
+                "Subiendo fotos de la etiqueta"
+              );
+            } catch (error) {
+              showMessage(
+                "Error de subida",
+                "No se pudieron subir las fotos de la etiqueta: " +
+                  error.message
+              );
+              submitButton.disabled = false;
+              loadingIndicator.classList.add("hidden");
+              return;
+            }
+          }
+
+          let puntoDeCorteUrls = [];
+          const puntoDeCorteFiles =
+            puntoDeCorteInput.files.length > 0
+              ? puntoDeCorteInput.files
+              : puntoDeCorteInputCamera.files;
+          if (puntoDeCorteFiles.length > 0) {
+            try {
+              puntoDeCorteUrls = await uploadImages(
+                Array.from(puntoDeCorteFiles),
+                "Subiendo fotos del punto de corte"
+              );
+            } catch (error) {
+              showMessage(
+                "Error de subida",
+                "No se pudieron subir las fotos del punto de corte: " +
+                  error.message
+              );
+              submitButton.disabled = false;
+              loadingIndicator.classList.add("hidden");
+              return;
+            }
+          }
+
+          const getSelectValue = (selectId, inputId) => {
+            const selectElement = document.getElementById(selectId);
+            if (selectElement.value === "Otro") {
+              return document.getElementById(inputId).value;
+            }
+            return selectElement.value;
+          };
+
+          const report = {
+            fecha: new Date().toLocaleString(),
+            terminalAutomotriz:
+              document.getElementById("terminalAutomotriz").value,
+            residente: residenteValue,
+            turno: document.getElementById("turno").value,
+            producto: getSelectValue("producto", "productoOtroInput"),
+            pieza: document.getElementById("pieza").value,
+            cantidadNoConforme:
+              document.getElementById("cantidadNoConforme").value,
+            motivoNoConforme: getSelectValue(
+              "motivoNoConforme",
+              "motivoNoConformeOtroInput"
+            ),
+            zona: getSelectValue("zona", "zonaOtroInput"),
+            rotacionSecuencia:
+              document.getElementById("rotacionSecuencia").value,
+            vinHu: document.getElementById("vinHu").value,
+            defectoProceso: getSelectValue(
+              "defectoProceso",
+              "defectoProcesoOtroInput"
+            ),
+            etiquetaUrls: etiquetaUrls,
+            accion: accionSelect.value,
+            accionDetalle:
+              document.getElementById("accionDetalle").value || "N/A",
+            puntoDeCorte: document.getElementById("puntoDeCorte").value,
+            puntoDeCorteUrls: puntoDeCorteUrls,
+          };
+
+          reports.push(report);
+          saveReports();
+          renderReports();
+
+          showMessage("Éxito", "El problema ha sido registrado correctamente.");
+          reportForm.reset();
+          document.getElementById("etiquetaPreview").classList.add("hidden");
+          document
+            .getElementById("puntoDeCortePreview")
+            .classList.add("hidden");
+          document.getElementById("accionDetalleDiv").classList.add("hidden");
+          document.getElementById("residenteEmailDiv").classList.add("hidden");
+          dropdownsConOtro.forEach(({ divId }) =>
+            document.getElementById(divId).classList.add("hidden")
+          );
+
+          submitButton.disabled = false;
+          loadingIndicator.classList.add("hidden");
+        });
+
+        function generateCsvContent() {
+          if (reports.length === 0) {
+            return null;
+          }
+
+          const headers = [
+            "Fecha",
+            "Terminal Automotriz",
+            "Residente",
+            "Turno",
+            "Producto",
+            "Pieza",
+            "Cantidad No Conforme",
+            "Motivo No Conforme",
+            "Zona",
+            "Rotacion/Secuencia",
+            "VIN/HU",
+            "Defecto de Proceso",
+            "Trazabilidad Etiqueta URLs",
+            "Accion",
+            "Detalle Accion",
+            "Punto de Corte",
+            "Punto de Corte URLs",
+          ];
+          let csvContent = `data:text/csv;charset=utf-8,${headers
+            .map((h) => `"${h}"`)
+            .join(",")}\n`;
+
+          reports.forEach((report) => {
+            const row = [
+              report.fecha,
+              report.terminalAutomotriz,
+              report.residente,
+              report.turno,
+              Array.isArray(report.producto)
+                ? report.producto.join(", ")
+                : report.producto,
+              report.pieza,
+              report.cantidadNoConforme,
+              Array.isArray(report.motivoNoConforme)
+                ? report.motivoNoConforme.join(", ")
+                : report.motivoNoConforme,
+              Array.isArray(report.zona) ? report.zona.join(", ") : report.zona,
+              report.rotacionSecuencia,
+              report.vinHu,
+              Array.isArray(report.defectoProceso)
+                ? report.defectoProceso.join(", ")
+                : report.defectoProceso,
+              report.etiquetaUrls.join(", "),
+              report.accion,
+              report.accionDetalle,
+              report.puntoDeCorte,
+              report.puntoDeCorteUrls.join(", "),
+            ]
+              .map((field) => `"${String(field).replace(/"/g, '""')}"`)
+              .join(",");
+            csvContent += row + "\n";
+          });
+          return csvContent;
+        }
+
+        exportButton.addEventListener("click", () => {
+          const csvContent = generateCsvContent();
+          if (!csvContent) {
+            showMessage("Error", "No hay reportes para exportar.");
+            return;
+          }
+
+          const lastReport = reports[reports.length - 1];
+          const terminal = lastReport.terminalAutomotriz.replace(/ /g, "_");
+          const producto = lastReport.producto.replace(/ /g, "_");
+          const pieza = lastReport.pieza.replace(/ /g, "_");
+          const turno = lastReport.turno.replace(/ /g, "_");
+          const fecha = new Date()
+            .toLocaleDateString("es-AR")
+            .replace(/\//g, "-");
+          const fileName = `${terminal}_${producto}_${pieza}_${turno}_${fecha}.csv`;
+
+          const encodedUri = encodeURI(csvContent);
+          const link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", fileName);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          // Eliminar todos los reportes después de la exportación
+          reports = [];
+          saveReports();
+          renderReports();
+
+          showMessage(
+            "Exportación Exitosa",
+            `El archivo ${fileName} ha sido generado y descargado y la lista de reportes se ha vaciado.`
+          );
+        });
+
+        shareButton.addEventListener("click", async () => {
+          const csvContent = generateCsvContent();
+          if (!csvContent) {
+            showMessage("Error", "No hay reportes para compartir.");
+            return;
+          }
+
+          if (navigator.share) {
+            try {
+              const file = new File([csvContent], "reporte_de_calidad.csv", {
+                type: "text/csv",
+              });
+              await navigator.share({
+                files: [file],
+                title: "Reporte de Calidad",
+                text: "Aquí está el reporte de calidad en formato CSV.",
+              });
+              showMessage(
+                "Compartido",
+                "El reporte ha sido compartido exitosamente."
+              );
+            } catch (error) {
+              showMessage(
+                "Error",
+                "Se canceló la acción de compartir o ocurrió un error."
+              );
+            }
+          } else {
+            showMessage(
+              "Función no disponible",
+              "La función de compartir no está disponible en este navegador."
+            );
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
