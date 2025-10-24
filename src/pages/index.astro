@@ -3,8 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import ReportManager from "../components/ReportManager.astro";
 
-// Definimos los datos de los dropdowns aquí, en el servidor.
-// Luego los pasaremos como 'props' al componente de cliente.
 const reportData = {
   terminalesAutomotrices: ["Volkswagen", "Stellantis", "GM", "Stellantis RAM"],
   residentes: ["Residente A", "Residente B", "Residente C", "Ingresar mail"],
@@ -59,9 +57,8 @@ const reportData = {
 ---
 
 <Layout title="Reporte de Residentes en Clientes">
-  <div class="container mx-auto max-w-4xl">
-    <Header />
-
+  <Header />
+  <div class="container mx-auto w-full">
     <ReportManager data={reportData} client:load />
   </div>
 </Layout>

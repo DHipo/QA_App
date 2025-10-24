@@ -6,19 +6,27 @@ const { data } = Astro.props;
 import ReportForm from "./ReportForm.astro";
 ---
 
-<div id="report-manager-wrapper" data-options={JSON.stringify(data)}>
-
+<div
+  id="report-manager-wrapper"
+  class="flex flex-col justify-center items-center w-full"
+  data-options={JSON.stringify(data)}
+>
   <div class="card bg-base-100 shadow-xl mb-6">
-    <div class="card-body p-6 sm:p-10">
+    <div
+      class="flex flex-col justify-center items-center card-body p-6 sm:p-10"
+    >
       <ReportForm />
     </div>
   </div>
 
-  <div class="card bg-base-100 shadow-xl">
-    <div class="card-body p-6 sm:p-10">
-      <h2 class="card-title text-2xl font-bold justify-center mb-4">
+  <div class="card bg-base-100 shadow-xl w-full">
+    <div class="card-body flex flex-col text-center w-full p-6 sm:p-10">
+      <h2 id="title" class="card-title text-2xl font-bold justify-center">
         Reportes Guardados
       </h2>
+      <p class="text-gray-600 mb-4">
+        Los reportes guardados se almacenan localmente en tu navegador.
+      </p>
       <div class="overflow-x-auto">
         <table class="table w-full">
           <thead>
@@ -41,8 +49,7 @@ import ReportForm from "./ReportForm.astro";
               <th>Foto PdC</th>
             </tr>
           </thead>
-          <tbody id="reportTableBody">
-            </tbody>
+          <tbody id="reportTableBody"> </tbody>
         </table>
       </div>
       <p id="noReportsMessage" class="mt-4 text-center text-gray-500 hidden">
@@ -89,6 +96,11 @@ import ReportForm from "./ReportForm.astro";
     }
   }
 
+  function clearReports() {
+    localStorage.removeItem("qualityReports");
+    reports = [];
+  }
+
   // Render reports to the table
   function renderReports() {
     const reportTableBody = document.getElementById("reportTableBody");
@@ -106,31 +118,20 @@ import ReportForm from "./ReportForm.astro";
             <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">${
               report.fecha || "N/A"
             }</td>
-            <td class="py-4 px-6">${
-              report.terminalAutomotriz || "N/A"
-            }</td>
+            <td class="py-4 px-6">${report.terminalAutomotriz || "N/A"}</td>
             <td class="py-4 px-6">${report.residente || "N/A"}</td>
             <td class="py-4 px-6">${report.turno || "N/A"}</td>
             <td class="py-4 px-6">${report.producto || "N/A"}</td>
             <td class="py-4 px-6">${report.pieza || "N/A"}</td>
-            <td class="py-4 px-6">${
-              report.cantidadNoConforme || "N/A"
-            }</td>
-            <td class="py-4 px-6">${
-              report.motivoNoConforme || "N/A"
-            }</td>
+            <td class="py-4 px-6">${report.cantidadNoConforme || "N/A"}</td>
+            <td class="py-4 px-6">${report.motivoNoConforme || "N/A"}</td>
             <td class="py-4 px-6">${report.zona || "N/A"}</td>
-            <td class="py-4 px-6">${
-              report.rotacionSecuencia || "N/A"
-            }</td>
+            <td class="py-4 px-6">${report.rotacionSecuencia || "N/A"}</td>
             <td class="py-4 px-6">${report.vinHu || "N/A"}</td>
-            <td class="py-4 px-6">${
-              report.defectoProceso || "N/A"
-            }</td>
+            <td class="py-4 px-6">${report.defectoProceso || "N/A"}</td>
             <td class="py-4 px-6">
                 ${
-                  report.etiquetaUrls &&
-                  report.etiquetaUrls.length > 0
+                  report.etiquetaUrls && report.etiquetaUrls.length > 0
                     ? report.etiquetaUrls
                         .map(
                           (url) =>
@@ -141,15 +142,12 @@ import ReportForm from "./ReportForm.astro";
                 }
             </td>
             <td class="py-4 px-6">${report.accion || "N/A"}${
-          report.accionDetalle ? ` (${report.accionDetalle})` : ""
-        }</td>
-            <td class="py-4 px-6">${
-              report.puntoDeCorte || "N/A"
+              report.accionDetalle ? ` (${report.accionDetalle})` : ""
             }</td>
+            <td class="py-4 px-6">${report.puntoDeCorte || "N/A"}</td>
             <td class="py-4 px-6">
                 ${
-                  report.puntoDeCorteUrls &&
-                  report.puntoDeCorteUrls.length > 0
+                  report.puntoDeCorteUrls && report.puntoDeCorteUrls.length > 0
                     ? report.puntoDeCorteUrls
                         .map(
                           (url) =>
@@ -176,15 +174,11 @@ import ReportForm from "./ReportForm.astro";
   const reportForm = document.getElementById("reportForm");
   const residenteSelect = document.getElementById("residente");
   const residenteEmailDiv = document.getElementById("residenteEmailDiv");
-  const residenteEmailInput = document.getElementById(
-    "residenteEmailInput"
-  );
+  const residenteEmailInput = document.getElementById("residenteEmailInput");
   const accionSelect = document.getElementById("accion");
   const accionDetalleDiv = document.getElementById("accionDetalleDiv");
   const etiquetaInput = document.getElementById("etiquetaInput");
-  const etiquetaInputCamera = document.getElementById(
-    "etiquetaInputCamera"
-  );
+  const etiquetaInputCamera = document.getElementById("etiquetaInputCamera");
   const etiquetaPreview = document.getElementById("etiquetaPreview");
   const previewEtiquetaContainer = document.getElementById(
     "previewEtiquetaContainer"
@@ -193,9 +187,7 @@ import ReportForm from "./ReportForm.astro";
   const puntoDeCorteInputCamera = document.getElementById(
     "puntoDeCorteInputCamera"
   );
-  const puntoDeCortePreview = document.getElementById(
-    "puntoDeCortePreview"
-  );
+  const puntoDeCortePreview = document.getElementById("puntoDeCortePreview");
   const previewPuntoDeCorteContainer = document.getElementById(
     "previewPuntoDeCorteContainer"
   );
@@ -213,9 +205,9 @@ import ReportForm from "./ReportForm.astro";
     modalTitle.textContent = title;
     modalMessage.textContent = message;
     if (messageModal.showModal) {
-        messageModal.showModal();
+      messageModal.showModal();
     } else {
-        messageModal.classList.remove("hidden");
+      messageModal.classList.remove("hidden");
     }
   }
 
@@ -313,11 +305,7 @@ import ReportForm from "./ReportForm.astro";
   });
 
   // Lógica de previsualización de imágenes
-  function handleImageSelection(
-    fileInput,
-    previewContainer,
-    previewParentDiv
-  ) {
+  function handleImageSelection(fileInput, previewContainer, previewParentDiv) {
     previewContainer.innerHTML = "";
     if (fileInput.files.length > 0) {
       Array.from(fileInput.files).forEach((file) => {
@@ -364,7 +352,7 @@ import ReportForm from "./ReportForm.astro";
       puntoDeCortePreview
     )
   );
-  
+
   // Lógica de subida a Cloudinary
   async function uploadImageToCloudinary(file) {
     const cloudName = "dk6fevv3i"; // TU cloudName
@@ -392,16 +380,17 @@ import ReportForm from "./ReportForm.astro";
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(
-          errorData.error.message ||
-            "Fallo al subir la imagen a Cloudinary."
+          errorData.error.message || "Fallo al subir la imagen a Cloudinary."
         );
       }
       const data = await response.json();
-      return data.secure_url; 
-    } catch (error) { throw error; }
+      return data.secure_url;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  async function uploadImages(files:any, progressMessage:any) {
+  async function uploadImages(files: any, progressMessage: any) {
     const urls = [];
     for (let i = 0; i < files.length; i++) {
       showMessage(
@@ -450,8 +439,7 @@ import ReportForm from "./ReportForm.astro";
       } catch (error) {
         showMessage(
           "Error de subida",
-          "No se pudieron subir las fotos de la etiqueta: " +
-          error.message
+          "No se pudieron subir las fotos de la etiqueta: " + error.message
         );
         submitButton.disabled = false;
         loadingIndicator.classList.add("hidden");
@@ -473,8 +461,7 @@ import ReportForm from "./ReportForm.astro";
       } catch (error) {
         showMessage(
           "Error de subida",
-          "No se pudieron subir las fotos del punto de corte: " +
-            error.message
+          "No se pudieron subir las fotos del punto de corte: " + error.message
         );
         submitButton.disabled = false;
         loadingIndicator.classList.add("hidden");
@@ -492,21 +479,18 @@ import ReportForm from "./ReportForm.astro";
 
     const report = {
       fecha: new Date().toLocaleString(),
-      terminalAutomotriz:
-        document.getElementById("terminalAutomotriz").value,
+      terminalAutomotriz: document.getElementById("terminalAutomotriz").value,
       residente: residenteValue,
       turno: document.getElementById("turno").value,
       producto: getSelectValue("producto", "productoOtroInput"),
       pieza: document.getElementById("pieza").value,
-      cantidadNoConforme:
-        document.getElementById("cantidadNoConforme").value,
+      cantidadNoConforme: document.getElementById("cantidadNoConforme").value,
       motivoNoConforme: getSelectValue(
         "motivoNoConforme",
         "motivoNoConformeOtroInput"
       ),
       zona: getSelectValue("zona", "zonaOtroInput"),
-      rotacionSecuencia:
-        document.getElementById("rotacionSecuencia").value,
+      rotacionSecuencia: document.getElementById("rotacionSecuencia").value,
       vinHu: document.getElementById("vinHu").value,
       defectoProceso: getSelectValue(
         "defectoProceso",
@@ -514,8 +498,7 @@ import ReportForm from "./ReportForm.astro";
       ),
       etiquetaUrls: etiquetaUrls,
       accion: accionSelect.value,
-      accionDetalle:
-        document.getElementById("accionDetalle").value || "N/A",
+      accionDetalle: document.getElementById("accionDetalle").value || "N/A",
       puntoDeCorte: document.getElementById("puntoDeCorte").value,
       puntoDeCorteUrls: puntoDeCorteUrls,
     };
@@ -526,7 +509,7 @@ import ReportForm from "./ReportForm.astro";
 
     showMessage("Éxito", "El problema ha sido registrado correctamente.");
     reportForm.reset();
-    
+
     // Resetear vistas previas y campos condicionales
     previewEtiquetaContainer.innerHTML = "";
     previewPuntoDeCorteContainer.innerHTML = "";
@@ -612,13 +595,14 @@ import ReportForm from "./ReportForm.astro";
     const csvContent = generateCsvContent();
 
     const lastReport = reports[reports.length - 1];
-    const terminal = (lastReport.terminalAutomotriz || "Reporte").replace(/ /g, "_");
+    const terminal = (lastReport.terminalAutomotriz || "Reporte").replace(
+      / /g,
+      "_"
+    );
     const producto = (lastReport.producto || "Producto").replace(/ /g, "_");
     const pieza = (lastReport.pieza || "Pieza").replace(/ /g, "_");
     const turno = (lastReport.turno || "Turno").replace(/ /g, "_");
-    const fecha = new Date()
-      .toLocaleDateString("es-AR")
-      .replace(/\//g, "-");
+    const fecha = new Date().toLocaleDateString("es-AR").replace(/\//g, "-");
     const fileName = `${terminal}_${producto}_${pieza}_${turno}_${fecha}.csv`;
 
     const encodedUri = encodeURI(csvContent);
@@ -649,7 +633,10 @@ import ReportForm from "./ReportForm.astro";
 
     if (navigator.share) {
       try {
-        const csvBlob = new Blob([decodeURI(csvContent.replace("data:text/csv;charset=utf-8,",""))], { type: 'text/csv;charset=utf-8;' });
+        const csvBlob = new Blob(
+          [decodeURI(csvContent.replace("data:text/csv;charset=utf-8,", ""))],
+          { type: "text/csv;charset=utf-8;" }
+        );
         const csvFile = new File([csvBlob], "reporte_de_calidad.csv", {
           type: "text/csv;charset=utf-8;",
         });
@@ -667,7 +654,8 @@ import ReportForm from "./ReportForm.astro";
         console.log("Error al compartir:", error);
         showMessage(
           "Error",
-          "Se canceló la acción de compartir o ocurrió un error: " + error.message
+          "Se canceló la acción de compartir o ocurrió un error: " +
+            error.message
         );
       }
     } else {
