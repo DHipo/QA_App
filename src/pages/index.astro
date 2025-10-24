@@ -1,8 +1,67 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/navbar.astro';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import ReportManager from "../components/ReportManager.astro";
+
+// Definimos los datos de los dropdowns aquí, en el servidor.
+// Luego los pasaremos como 'props' al componente de cliente.
+const reportData = {
+  terminalesAutomotrices: ["Volkswagen", "Stellantis", "GM", "Stellantis RAM"],
+  residentes: ["Residente A", "Residente B", "Residente C", "Ingresar mail"],
+  productos: ["Producto A", "Producto B", "Producto C", "Otro"],
+  turnos: ["Turno mañana", "Turno tarde", "Turno noche"],
+  motivosNoConformes: [
+    "Pintura rayada",
+    "Pintura chorreada",
+    "Pintura con grumos",
+    "Pintura con piel de naranja",
+    "Falta de Pintura",
+    "Falta de clear",
+    "Golpes",
+    "Marcas",
+    "Rotura",
+    "Suciedad",
+    "Pieza mojada",
+    "Pieza cromada con defectos",
+    "Falta etiqueta secuenciado",
+    "Falta etiqueta trazabilidad",
+    "Etiqueta dañada",
+    "Etiqueta ilegale",
+    "Pieza Desclipsada",
+    "Falta de clips",
+    "Falta de tornillo",
+    "Tornillo flojo",
+    "Ruido",
+    "Ficha desconectada",
+    "Ficha de cables dañada",
+    "Cable dañado",
+    "Lamina antichiping aglobada",
+    "Lamina antichiping despegada",
+    "Lamina antichiping dañada",
+    "Pieza dañada en medio embalaje",
+    "Pieza inyectada con Falta de llenado",
+    "Pieza inyectada con defecto de aspecto",
+    "Defecto funcional de Pieza",
+    "Faro auxiliar dañado",
+  ],
+  zonas: [
+    "Grilla frontal",
+    "Delantero",
+    "Trasero",
+    "Delantero izquierdo",
+    "Delantero derecho",
+    "Trasero izquierdo",
+    "Trasero derecho",
+    "Otro",
+  ],
+  defectosProceso: ["Pintura", "Montaje", "Soldadura", "Ajuste", "Otro"],
+};
 ---
 
-<Layout>
-  <Navbar />
+<Layout title="Reporte de Residentes en Clientes">
+  <div class="container mx-auto max-w-4xl">
+    <Header />
+
+    <ReportManager data={reportData} client:load />
+  </div>
 </Layout>
